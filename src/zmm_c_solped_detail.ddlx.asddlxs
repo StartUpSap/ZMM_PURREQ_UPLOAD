@@ -1,0 +1,162 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+        typeName: 'Detalle',
+        typeNamePlural: 'Detalle',
+        title: {
+            type: #STANDARD, value: 'DetailId'
+        }
+        ,
+        description: {
+            value: 'PurchaseRequisitionItem'
+        }
+    }
+}
+annotate entity ZMM_c_SOLPED_DETAIL with
+{
+  @UI.facet: [
+       {
+          id: 'DETAIL_INFO',
+          type: #COLLECTION,
+          label: 'Item Details',
+          position: 10
+       },
+       {
+          id: 'DETAIL',
+          parentId: 'DETAIL_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Detail',
+          position: 10,
+          targetQualifier: 'DETAIL'
+       },
+       {
+          id: 'AUDIT',
+          parentId: 'DETAIL_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Audit',
+          position: 20,
+          targetQualifier: 'AUDIT'
+       }
+    ]
+
+  @UI:{ lineItem: [{position: 10,importance: #HIGH }],
+        identification: [{position: 10, qualifier: 'DETAIL' }] }
+  DetailId;
+
+  @UI:{ identification: [{position: 20, qualifier: 'DETAIL' }] }
+  PurchaseRequisition;
+
+  @UI:{ lineItem: [{position: 30,importance: #HIGH }],
+        identification: [{position: 30, qualifier: 'DETAIL' }] }
+  PurchaseRequisitionItem;
+
+  @UI:{ lineItem: [{position: 40,importance: #MEDIUM }],
+        identification: [{position: 40, qualifier: 'DETAIL' }]}
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_PurchasingOrganization', element: 'PurchasingOrganization'} }]
+  PurchasingOrganization;
+
+  @UI:{ lineItem: [{position: 50,importance: #MEDIUM }],
+        identification: [{position: 50, qualifier: 'DETAIL' }]}
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_PurchasingGroup', element: 'PurchasingGroup'} }]
+  PurchasingGroup;
+
+  @UI:{ lineItem: [{position: 60,importance: #HIGH }],
+        identification: [{position: 60, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmm_Requisitioner_vh', element: 'RequisitionerName'} }]
+  RequisitionerName;
+
+  @UI:{ lineItem: [{position: 70,importance: #MEDIUM }],
+        identification: [{position: 70, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_PlantStdVH', element: 'Plant'} }]
+  Plant;
+
+  @UI:{ lineItem: [{position: 80,importance: #MEDIUM }],
+        identification: [{position: 80, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_StorageLocationStdVH', element: 'StorageLocation'} ,
+                                       additionalBinding: [{  element: 'Plant', localElement: 'Plant', usage: #FILTER }] }]
+  StorageLocation;
+
+  @UI:{ lineItem: [{position: 90,importance: #LOW }],
+        identification: [{position: 90, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'zmm_AccAssignmentCategory_vh', element: 'AccountAssignmentCategory'} }]
+  AccountAssignmentCategory;
+
+  @UI:{ lineItem: [{position: 100,importance: #LOW }],
+        identification: [{position: 100, qualifier: 'DETAIL' }] }
+  PurchasingDocumentItemCategory;
+
+  @UI:{ lineItem: [{position: 110,importance: #HIGH }],
+        identification: [{position: 110, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_ProductStdVH', element: 'Product'} }]
+  Material;
+
+  @UI:{ lineItem: [{position: 120,importance: #MEDIUM }],
+        identification: [{position: 120, qualifier: 'DETAIL' }] }
+  MaterialDescription;
+
+  @UI:{ lineItem: [{position: 130,importance: #LOW }],
+        identification: [{position: 130, qualifier: 'DETAIL' }] }
+  MaterialGroup;
+
+  @UI:{ lineItem: [{position: 140,importance: #HIGH }],
+        identification: [{position: 140, qualifier: 'DETAIL' }] }
+  RequestedQuantity;
+
+  @UI:{ lineItem: [{position: 150,importance: #HIGH }],
+        identification: [{position: 150, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_UnitOfMeasureStdVH', element: 'UnitOfMeasure'} }]
+  BaseUnit;
+
+  @UI:{ lineItem: [{position: 160,importance: #MEDIUM }],
+        identification: [{position: 160, qualifier: 'DETAIL' }] }
+  DeliveryDate;
+
+  @UI:{ lineItem: [{position: 170,importance: #HIGH }],
+        identification: [{position: 170, qualifier: 'DETAIL' }] }
+  RequirementTracking;
+
+  @UI:{ lineItem: [{position: 180,importance: #LOW }],
+        identification: [{position: 180, qualifier: 'DETAIL' }] }
+  ItemText;
+
+  @UI:{ lineItem: [{position: 190,importance: #HIGH }],
+        identification: [{position: 190, qualifier: 'DETAIL' }] }
+  @EndUserText.label: 'Precio'
+  PurchaseRequisitionPrice;
+
+  @UI:{ lineItem: [{position: 200,importance: #HIGH }],
+        identification: [{position: 210, qualifier: 'DETAIL' }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_CurrencyStdVH', element: 'Currency'} }]
+  PurReqnItemCurrency;
+
+  @UI:{ lineItem: [{position: 220,importance: #LOW }],
+        identification: [{position: 220, qualifier: 'DETAIL' }] }
+  GLAccount;
+
+  @UI:{ lineItem: [{position: 230,importance: #LOW }],
+        identification: [{position: 230, qualifier: 'DETAIL' }] }
+  CostCenter;
+
+  @UI:{ lineItem: [{position: 240,importance: #LOW }],
+        identification: [{position: 240, qualifier: 'DETAIL' }] }
+  @EndUserText.label: 'Fecha de Inicio'
+  PerformancePeriodStartDate;
+
+  @UI:{ lineItem: [{position: 250,importance: #LOW }],
+        identification: [{position: 250, qualifier: 'DETAIL' }] }
+  @EndUserText.label: 'Fecha Fin'
+  PerformancePeriodEndDate;
+
+  @UI:{ identification: [{position: 300, qualifier: 'AUDIT' }] }
+  LocalCreatedBy;
+
+  @UI:{ identification: [{position: 310, qualifier: 'AUDIT' }]}
+  LocalCreatedAt;
+
+  @UI:{ identification: [{position: 320, qualifier: 'AUDIT' }] }
+  LocalLastChangedBy;
+
+  @UI:{ identification: [{position: 330, qualifier: 'AUDIT' }] }
+  LocalLastChangedAt;
+}

@@ -1,0 +1,35 @@
+managed implementation in class zbp_mm_r_solped_catval_cta unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZMM_R_SOLPED_CATVAL_CTA alias CatValCta
+persistent table ztb_a_catval_cta
+draft table ztb_d_catval_cta
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  field ( readonly : update ) ValuationClass;
+  field ( readonly ) LocalCreatedBy, LocalCreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedAt;
+
+  create;
+  update;
+  delete;
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare;
+
+  mapping for ztb_a_catval_cta corresponding
+    {
+      ValuationClass     = bklas;
+      GLAccount          = sakto;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+}

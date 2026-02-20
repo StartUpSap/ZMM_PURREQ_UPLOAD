@@ -1,0 +1,68 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+        typeName: 'Cat.Valoración x Cuenta',
+        typeNamePlural: 'Cat.Valoración x Cuenta',
+        title: {
+            type: #STANDARD, value: 'ValuationClass'
+        }
+        ,
+        description: {
+            value: 'GLAccount'
+        }
+    }
+}
+
+annotate entity ZMM_C_SOLPED_CATVAL_CTA with
+{
+  @UI.facet: [
+       {
+          id: 'HEADER_INFO',
+          type: #COLLECTION,
+          label: 'Cat.Valoración x Cuenta',
+          position: 10
+       },
+       {
+          id: 'HEADER',
+          parentId: 'HEADER_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Datos',
+          position: 10,
+          targetQualifier: 'HEADER'
+       },
+       {
+          id: 'AUDIT',
+          parentId: 'HEADER_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Audit',
+          position: 20,
+          targetQualifier: 'AUDIT'
+       }
+    ]
+
+  @UI:{ lineItem: [{position: 10,importance: #HIGH }],
+        identification: [{position: 10, qualifier: 'HEADER' }],
+        selectionField: [{position: 10 }] }
+  ValuationClass;
+
+  @UI:{ lineItem: [{position: 20,importance: #HIGH }],
+        identification: [{position: 20, qualifier: 'HEADER' }],
+        selectionField: [{position: 20 }] }
+  GLAccount;
+
+  @UI:{ lineItem: [{position: 400,importance: #LOW }],
+        identification: [{position: 400, qualifier: 'AUDIT' }] }
+  LocalCreatedBy;
+
+  @UI:{ lineItem: [{position: 410,importance: #LOW }],
+        identification: [{position: 410, qualifier: 'AUDIT' }]}
+  LocalCreatedAt;
+
+  @UI:{ identification: [{position: 420, qualifier: 'AUDIT' }] }
+  LocalLastChangedBy;
+
+  @UI:{ identification: [{position: 430, qualifier: 'AUDIT' }] }
+  LocalLastChangedAt;
+
+}

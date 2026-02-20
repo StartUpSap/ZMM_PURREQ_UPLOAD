@@ -1,0 +1,101 @@
+unmanaged implementation in class zbp_mm_r_solped_header unique;
+strict ( 2 );
+with draft;
+
+define behavior for zmm_r_solped_header alias Header
+implementation in class zbp_mm_r_solped_header unique
+draft table ztb_d_solped_hea
+early numbering
+lock master total etag LastChangedAt
+authorization master ( global, instance )
+etag master LocalLastChangedAt
+{
+
+  field ( readonly ) HeaderId, PurchaseRequisition;
+  field ( readonly ) LocalCreatedBy, LocalCreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedAt;
+  field ( readonly ) PurchaseRequisitionType;
+
+  create;
+  update ( features : instance );
+  delete ( features : instance );
+  association _Detail { create; with draft; }
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  action ( features : instance ) actionCreatePurchaseReq result [1] $self;
+
+  determination fillDataFromFile on modify { field Attachment; }
+
+  mapping for ztb_a_solped_hea control zcs_solped_hea
+    {
+      HeaderId                = header_id;
+      Attachment              = attachment;
+      Mimetype                = mimetype;
+      Filename                = filename;
+      PurchaseRequisition     = banfn;
+      PurchaseRequisitionType = bsart;
+      LocalCreatedBy          = local_created_by;
+      LocalCreatedAt          = local_created_at;
+      LocalLastChangedBy      = local_last_changed_by;
+      LocalLastChangedAt      = local_last_changed_at;
+      LastChangedAt           = last_changed_at;
+    }
+}
+
+define behavior for ZMM_i_SOLPED_detail alias Detail
+implementation in class zbp_mm_r_solped_detail unique
+draft table ztb_d_solped_det
+early numbering
+lock dependent by _Header
+authorization dependent by _Header
+etag master LocalLastChangedAt
+{
+  field ( readonly ) HeaderId, DetailId, PurchaseRequisition, PurchaseRequisitionItem;
+//  field ( readonly ) PurchasingOrganization, PurchasingGroup, RequisitionerName, Plant,
+//                     StorageLocation;
+  field ( readonly ) MaterialDescription, MaterialGroup, GLAccount;
+//  field ( readonly ) AccountAssignmentCategory, PurchasingDocumentItemCategory, Material, RequestedQuantity;
+//  field ( readonly ) BaseUnit, DeliveryDate, RequirementTracking, ItemText;
+  field ( readonly ) LocalCreatedBy, LocalCreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedAt;
+
+  update;
+  delete;
+
+  association _Header { with draft; }
+
+  mapping for ztb_a_solped_det control zcs_solped_det
+    {
+      HeaderId                       = header_id;
+      DetailId                       = detail_id;
+      PurchaseRequisition            = banfn;
+      PurchaseRequisitionItem        = bnfpo;
+      PurchasingOrganization         = ekorg;
+      PurchasingGroup                = ekgrp;
+      RequisitionerName              = afnam;
+      Plant                          = werks;
+      StorageLocation                = lgort;
+      AccountAssignmentCategory      = knttp;
+      PurchasingDocumentItemCategory = pstyp;
+      Material                       = matnr;
+      RequestedQuantity              = menge;
+      BaseUnit                       = meins;
+      DeliveryDate                   = lfdat;
+      RequirementTracking            = bednr;
+      ItemText                       = text;
+      PurchaseRequisitionPrice       = preis;
+      PurReqnItemCurrency            = waers;
+      GLAccount                      = sakto;
+      CostCenter                     = kostl;
+      PerformancePeriodStartDate     = startdate;
+      PerformancePeriodEndDate       = enddate;
+      LocalCreatedBy                 = local_created_by;
+      LocalCreatedAt                 = local_created_at;
+      LocalLastChangedBy             = local_last_changed_by;
+      LocalLastChangedAt             = local_last_changed_at;
+      LastChangedAt                  = last_changed_at;
+    }
+}

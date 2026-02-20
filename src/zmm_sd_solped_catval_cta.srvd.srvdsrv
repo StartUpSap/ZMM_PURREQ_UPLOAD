@@ -1,0 +1,5 @@
+@EndUserText.label: 'Pur.Req. Cat. Valoración x Cuenta'
+define service ZMM_SD_SOLPED_CATVAL_CTA
+  provider contracts odata_v4_ui {
+  expose ZMM_C_SOLPED_CATVAL_CTA as CatValCta;
+}

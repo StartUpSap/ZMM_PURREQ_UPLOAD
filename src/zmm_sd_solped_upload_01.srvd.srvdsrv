@@ -1,0 +1,6 @@
+@EndUserText.label: 'Creación de Solped desde archivo Excel'
+define service Zmm_sd_solped_upload_01
+  provider contracts odata_v4_ui {
+  expose ZMM_C_SOLPED_HEADER as Header;
+  expose ZMM_c_SOLPED_DETAIL as Detail;
+}

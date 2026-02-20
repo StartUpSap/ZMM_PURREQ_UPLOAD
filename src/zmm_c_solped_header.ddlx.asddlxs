@@ -1,0 +1,123 @@
+@Metadata.layer: #CORE
+
+@UI: {
+    headerInfo: {
+        typeName: 'Solicitud de Pedido',
+        typeNamePlural: 'Solicitud de Pedidos',
+        typeImageUrl: 'https://.png',
+        title: {
+            type: #STANDARD,
+            value: 'HeaderId'
+        }
+        ,
+        description: {
+            type: #STANDARD,
+            value: 'PurchaseRequisition'
+        }
+    },
+    presentationVariant: [{
+        sortOrder: [{
+            by: 'LocalCreatedAt',
+            direction: #DESC
+        }],
+        visualizations: [{
+            type: #AS_LINEITEM
+        }]
+    }]
+}
+annotate entity ZMM_C_SOLPED_HEADER with
+{
+  @UI.facet: [
+       {
+          id: 'HEADER_INFO',
+          type: #COLLECTION,
+          label: 'Cargar datos'
+       },
+       {
+          id: 'FILE_INFO',
+          purpose: #STANDARD,
+          type: #FIELDGROUP_REFERENCE,
+          parentId: 'HEADER_INFO',
+          label: 'Seleccionar archivo',
+          position: 10,
+          targetQualifier: 'FILE_INFO'
+       },
+       {
+          id: 'GENERAL_INFO',
+          type: #COLLECTION,
+          label: 'Información'
+       },
+       {
+          id: 'HEADER',
+          parentId: 'GENERAL_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Cabecera',
+          position: 20,
+          targetQualifier: 'HEADER'
+       },
+       {
+          id: 'AUDIT',
+          parentId: 'GENERAL_INFO',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Log',
+          position: 30,
+          targetQualifier: 'AUDIT'
+       },
+         {
+            id: 'DETAIL',
+            purpose: #STANDARD,
+            type: #LINEITEM_REFERENCE,
+            label: 'Detalle',
+            position: 30,
+            targetElement: '_Detail'
+         }
+    ]
+
+  @UI:
+  { fieldGroup: [ { position: 10, qualifier: 'FILE_INFO' , label: 'Attachment'} ]}
+  Attachment;
+
+  @UI.hidden: true
+  MimeType;
+
+  @UI.hidden: true
+  Filename;
+  
+  @UI:{ lineItem: [{position: 10,importance: #HIGH } ],
+        identification: [{position: 10, qualifier: 'HEADER' },
+                         {type: #FOR_ACTION, dataAction: 'actionCreatePurchaseReq', label: 'Crear Solped', position: 10}] }
+  HeaderId;
+  
+  @UI:{ lineItem: [{position: 30,importance: #HIGH, type: #WITH_INTENT_BASED_NAVIGATION,
+                    semanticObject: 'PurchaseRequisition', semanticObjectAction: 'displayFactSheet', 
+                    requiresContext: true }],
+        identification: [{position: 30, qualifier: 'HEADER', type: #WITH_INTENT_BASED_NAVIGATION,
+                          semanticObject: 'PurchaseRequisition', semanticObjectAction: 'displayFactSheet', 
+                          requiresContext: true }],
+        selectionField: [{position: 20 }]  }
+  PurchaseRequisition;
+
+  @UI:{ lineItem: [{position: 40,importance: #HIGH }],
+        identification: [{position: 40, qualifier: 'HEADER' }],
+        selectionField: [{position: 30 }] }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_PurchaseRequisitionType', element: 'PurchaseRequisitionType'} }]
+  PurchaseRequisitionType;
+
+  @UI:{ lineItem: [{position: 200,importance: #LOW }],
+        identification: [{position: 200, qualifier: 'AUDIT' }],
+        selectionField: [{position: 90 }] }
+  LocalCreatedBy;
+
+  @UI:{ lineItem: [{position: 210,importance: #LOW }],
+        identification: [{position: 210, qualifier: 'AUDIT' }],
+        selectionField: [{position: 100 }]}
+  LocalCreatedAt;
+
+  @UI:{ lineItem: [{position: 220,importance: #LOW }],
+        identification: [{position: 220, qualifier: 'AUDIT' }] }
+  LocalLastChangedBy;
+
+  @UI:{ lineItem: [{position: 230,importance: #LOW }],
+        identification: [{position: 230, qualifier: 'AUDIT' }] }
+  LocalLastChangedAt;
+}
